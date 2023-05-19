@@ -1,11 +1,23 @@
 from django.contrib.auth.models import User
 from django.db.models import JSONField
 from django.db import models
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 
 
 # Create your models here.
 class Category(models.Model):
     category_name = models.CharField(max_length=32)
+    def __str__(self):
+        return self.category_name
 
 
 class Product(models.Model):
@@ -14,11 +26,15 @@ class Product(models.Model):
     product_img_url = models.CharField(max_length=256)
     price = models.DecimalField(max_digits=16, decimal_places=2)
     description = models.TextField()
+    def __str__(self):
+        return self.product_name
 
 
 class ShoppingCart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     items = JSONField(default=list)
+    def __str__(self):
+        return self.user
 
     def add_item(self, product, quantity):
         # Add a new item to the cart
@@ -54,6 +70,8 @@ class Order(models.Model):
     done = models.BooleanField(default=False)
     token = models.CharField(max_length=128)
     items = JSONField(default=list)
+    def __str__(self):
+        return self.id
 
     def get_total_price(self):
         # Calculate the total price of all items in the cart

@@ -21,6 +21,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 from shop_api.views import *
+from rest_framework.authtoken import views
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -28,8 +29,15 @@ router.register(r'categories', CategoryViewSet)
 router.register(r'products', ProductViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('<str:category_name>/', ProductList.as_view()),
+    path('', include(router.urls)),
+    path('admin/', admin.site.urls),
+
+    path('api/register/', RegisterUser.as_view(), name='register'),
+    path('api/login/', views.obtain_auth_token),
+    path('category/<str:category>/', ProductList.as_view()),
+    path('product/<int:product_id>', ProductView.as_view()),
+    path('add-to-cart/<int:product_id>/', AddProduct.as_view()),
+
 
 ]

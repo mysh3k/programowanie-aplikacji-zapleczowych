@@ -4,5 +4,3 @@ from .models import *
 
 admin.site.register(Category)
 admin.site.register(Product)
-
-x = 2
