@@ -60,7 +60,7 @@ class ShoppingCartAPI(View):
         user = Token.objects.get(key=token[1]).user
         shopping_cart = ShoppingCart.objects.get(user=user)
         serializer = ShoppingCartSerializer(shopping_cart)
-        return JsonResponse(serializer.data, safe=False)
+        return JsonResponse([serializer.data], safe=False)
 
 
 class AddProduct(View):

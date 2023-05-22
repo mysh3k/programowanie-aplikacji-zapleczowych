@@ -38,6 +38,11 @@ class ShoppingCart(models.Model):
 
     def add_item(self, product, quantity):
         # Add a new item to the cart
+        for prod in self.items:
+            if prod['product_id'] == product.id:
+                prod['quantity'] += 1
+                self.save()
+                return
         item = {'product_id': product.id, 'name': product.product_name, 'price': product.price, 'quantity': quantity, 'img_url': product.product_img_url}
         self.items.append(item)
         self.save()
