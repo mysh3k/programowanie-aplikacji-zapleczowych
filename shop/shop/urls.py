@@ -38,6 +38,7 @@ urlpatterns = [
     path('category/<str:category>/', ProductList.as_view()),
     path('product/<int:product_id>', ProductView.as_view()),
     path('add-to-cart/<int:product_id>/', AddProduct.as_view()),
+    path('shopping-cart/', ShoppingCartAPI.as_view()),
 
 
 ]

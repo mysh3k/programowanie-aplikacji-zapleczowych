@@ -53,23 +53,41 @@ class RegisterUser(CreateAPIView):
     serializer_class = UserProfileSerializer
 
 
-class ShoppingCart(View):
+class ShoppingCartAPI(View):
     def get(self, request):
-
-        return
+        token = request.headers['Authorization']
+        token = token.split(' ')
+        user = Token.objects.get(key=token[1]).user
+        shopping_cart = ShoppingCart.objects.get(user=user)
+        serializer = ShoppingCartSerializer(shopping_cart)
+        return JsonResponse(serializer.data, safe=False)
 
 
 class AddProduct(View):
     def get(self, request, product_id):
         token = request.headers['Authorization']
-        user = Token.objects.get(key=token).user
+        print(token)
+        token = token.split(' ')
+        user = Token.objects.get(key=token[1]).user
         shopping_cart = ShoppingCart.objects.filter(user=user)
+        product = Product.objects.get(id=product_id)
         if shopping_cart.count() > 0:
             shopping_cart = shopping_cart.first()
-            shopping_cart.add_item(product_id, 1)
-            return Response({'test': 1})
+            shopping_cart.add_item(product, 1)
         else:
             shopping_cart = ShoppingCart(user=user)
-            shopping_cart.add_item(product_id, 1)
+            shopping_cart.add_item(product, 1)
             shopping_cart.save()
-            return Response({'test': 2})
+        serializer = ShoppingCartSerializer(shopping_cart)
+        return JsonResponse(serializer.data, safe=False)
+
+
+class MakeOrder(View):
+    def get(self, request):
+        token = request.headers['Authorization']
+        token = token.split(' ')
+        user = Token.objects.get(key=token[1]).user
+        shopping_cart = ShoppingCart.objects.get(user=user)
+        order = Order(user=user, done=False, token=token[1], items=shopping_cart.items)
+        serializer = OrderSerializer(order)
+        return JsonResponse(serializer.data, safe=False)

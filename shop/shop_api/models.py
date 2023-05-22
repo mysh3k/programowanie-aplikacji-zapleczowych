@@ -24,7 +24,7 @@ class Product(models.Model):
     category_fk = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     product_name = models.CharField(max_length=64)
     product_img_url = models.CharField(max_length=256)
-    price = models.DecimalField(max_digits=16, decimal_places=2)
+    price = models.FloatField()
     description = models.TextField()
     def __str__(self):
         return self.product_name
@@ -38,7 +38,7 @@ class ShoppingCart(models.Model):
 
     def add_item(self, product, quantity):
         # Add a new item to the cart
-        item = {'product_id': product.id, 'name': product.name, 'price': product.price, 'quantity': quantity, 'img_url': product.product_img_url}
+        item = {'product_id': product.id, 'name': product.product_name, 'price': product.price, 'quantity': quantity, 'img_url': product.product_img_url}
         self.items.append(item)
         self.save()
 
