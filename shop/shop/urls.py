@@ -50,6 +50,6 @@ urlpatterns = [
 
     path('create-order/', MakeOrder.as_view()),
     path('show-orders/', OverviewOrders.as_view()),
-    path('show-order/', OverviewOrder.as_view()),
+    path('show-order/<int:order_id>', OverviewOrder.as_view()),
     path('pay-order/<int:order_id>/', PayOrder.as_view()),
 ]

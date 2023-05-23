@@ -135,6 +135,9 @@ class MakeOrder(View):
         user = Token.objects.get(key=token[1]).user
         shopping_cart = ShoppingCart.objects.get(user=user)
         order = Order(user=user, done=False, token=token[1], items=shopping_cart.items, total_price=shopping_cart.get_total_price())
+        order.save()
+        shopping_cart.clear_cart()
+        shopping_cart.save()
         serializer = OrderSerializer(order)
         return JsonResponse(serializer.data, safe=False)
 
@@ -147,8 +150,9 @@ class PayOrder(View):
         order = Order.objects.get(user=user, id=order_id)
         serializer = OrderSerializer(order)
         headers = {'authorization': 'token'}
-        payment_api_response = requests.post('http://127.0.0.1:8888/create-order/', headers=headers, data=serializer.data)
-        return JsonResponse(payment_api_response, safe=False)
+        print(headers, serializer.data)
+        # payment_api_response = requests.post('http://192.168.15.115:8888/create-order/', headers=headers, data=serializer.data)
+        return JsonResponse({}, safe=False)
 
 
 class OverviewOrders(View):
