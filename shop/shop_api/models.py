@@ -75,12 +75,7 @@ class Order(models.Model):
     done = models.BooleanField(default=False)
     token = models.CharField(max_length=128)
     items = JSONField(default=list)
+    payment_url = models.CharField(max_length=128, null=True, default=None)
+    total_price = models.FloatField()
     def __str__(self):
         return self.id
-
-    def get_total_price(self):
-        # Calculate the total price of all items in the cart
-        total_price = 0
-        for item in self.items:
-            total_price += item['price'] * item['quantity']
-        return total_price

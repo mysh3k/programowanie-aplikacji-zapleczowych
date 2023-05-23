@@ -1,34 +1,45 @@
 import json
-
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 from rest_framework import routers, serializers, viewsets, permissions
+from rest_framework.decorators import permission_classes
 from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
-
+import requests
 from .models import *
 from rest_framework import generics
 from .serializers import *
 
 
 # Create your views here.
+@permission_classes([IsAdminUser])
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserProfileSerializer
 
 
+@permission_classes([IsAdminUser])
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
+@permission_classes([IsAdminUser])
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+class CategoriesList(View):
+    def get(self, request):
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
 
 class ProductList(View):
@@ -66,7 +77,6 @@ class ShoppingCartAPI(View):
 class AddProduct(View):
     def get(self, request, product_id):
         token = request.headers['Authorization']
-        print(token)
         token = token.split(' ')
         user = Token.objects.get(key=token[1]).user
         shopping_cart = ShoppingCart.objects.filter(user=user)
@@ -82,12 +92,80 @@ class AddProduct(View):
         return JsonResponse(serializer.data, safe=False)
 
 
+class UpdateProductQuantity(View):
+    def get(self, request, p_index, p_quantity):
+        token = request.headers['Authorization']
+        token = token.split(' ')
+        user = Token.objects.get(key=token[1]).user
+        shopping_cart = ShoppingCart.objects.get(user=user)
+        shopping_cart.update_item_quantity(p_index, p_quantity)
+        shopping_cart.save()
+        serializer = ShoppingCartSerializer(shopping_cart)
+        return JsonResponse([serializer.data], safe=False)
+
+
+class DeleteProduct(View):
+    def get(self, request, p_index):
+        token = request.headers['Authorization']
+        token = token.split(' ')
+        user = Token.objects.get(key=token[1]).user
+        shopping_cart = ShoppingCart.objects.get(user=user)
+        shopping_cart.remove_item(p_index)
+        shopping_cart.save()
+        serializer = ShoppingCartSerializer(shopping_cart)
+        return JsonResponse([serializer.data], safe=False)
+
+
+class ClearCart(View):
+    def get(self, request):
+        token = request.headers['Authorization']
+        token = token.split(' ')
+        user = Token.objects.get(key=token[1]).user
+        shopping_cart = ShoppingCart.objects.get(user=user)
+        shopping_cart.clear_cart()
+        shopping_cart.save()
+        serializer = ShoppingCartSerializer(shopping_cart)
+        return JsonResponse([serializer.data], safe=False)
+
+
 class MakeOrder(View):
     def get(self, request):
         token = request.headers['Authorization']
         token = token.split(' ')
         user = Token.objects.get(key=token[1]).user
         shopping_cart = ShoppingCart.objects.get(user=user)
-        order = Order(user=user, done=False, token=token[1], items=shopping_cart.items)
+        order = Order(user=user, done=False, token=token[1], items=shopping_cart.items, total_price=shopping_cart.get_total_price())
         serializer = OrderSerializer(order)
         return JsonResponse(serializer.data, safe=False)
+
+
+class PayOrder(View):
+    def get(self, request, order_id):
+        token = request.headers['Authorization']
+        token = token.split(' ')
+        user = Token.objects.get(key=token[1]).user
+        order = Order.objects.get(user=user, id=order_id)
+        serializer = OrderSerializer(order)
+        headers = {'authorization': 'token'}
+        payment_api_response = requests.post('http://127.0.0.1:8888/create-order/', headers=headers, data=serializer.data)
+        return JsonResponse(payment_api_response, safe=False)
+
+
+class OverviewOrders(View):
+    def get(self, request):
+        token = request.headers['Authorization']
+        token = token.split(' ')
+        user = Token.objects.get(key=token[1]).user
+        order = Order.objects.filter(user=user)
+        serializer = OrderSerializer(order, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
+class OverviewOrder(View):
+    def get(self, request, order_id):
+        token = request.headers['Authorization']
+        token = token.split(' ')
+        user = Token.objects.get(key=token[1]).user
+        order = Order.objects.get(user=user, id=order_id)
+        serializer = OrderSerializer(order)
+        return JsonResponse([serializer.data], safe=False)

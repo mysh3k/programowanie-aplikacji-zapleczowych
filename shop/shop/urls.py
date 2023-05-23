@@ -23,6 +23,8 @@ from rest_framework import routers, serializers, viewsets
 from shop_api.views import *
 from rest_framework.authtoken import views
 
+
+
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'categories', CategoryViewSet)
@@ -33,10 +35,21 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
 
+    path('api/categories/', CategoriesList.as_view()),
+
     path('api/register/', RegisterUser.as_view(), name='register'),
     path('api/login/', views.obtain_auth_token),
-    path('category/<str:category>/', ProductList.as_view()),
-    path('product/<int:product_id>', ProductView.as_view()),
+    path('api/category/<str:category>/', ProductList.as_view()),
+    path('api/product/<int:product_id>', ProductView.as_view()),
+
     path('add-to-cart/<int:product_id>/', AddProduct.as_view()),
     path('shopping-cart/', ShoppingCartAPI.as_view()),
+    path('update-quantity/<int:p_index>/<int:p_quantity>/', UpdateProductQuantity.as_view()),
+    path('delete-product/<int:p_index>/', DeleteProduct.as_view()),
+    path('clear-cart/', ClearCart.as_view()),
+
+    path('create-order/', MakeOrder.as_view()),
+    path('show-orders/', OverviewOrders.as_view()),
+    path('show-order/', OverviewOrder.as_view()),
+    path('pay-order/<int:order_id>/', PayOrder.as_view()),
 ]
