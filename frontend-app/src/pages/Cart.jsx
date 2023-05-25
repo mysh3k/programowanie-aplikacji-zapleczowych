@@ -39,14 +39,15 @@ const Cart = () => {
         {shoppingCartQuery.isLoading ? (
           <div>Loading...</div>
         ) : shoppingCartQuery?.data[0].items.length !== 0 ? (
-          <button className=" cursor-pointer text-red-500 hover:text-red-700 ">
-            <a
-              onClick={() => {
-                handleShoppingCart(`clear-cart`);
-              }}
-            >
+          <button
+            className="   hover:text-red-500 "
+            onClick={() => {
+              handleShoppingCart(`clear-cart`);
+            }}
+          >
+            <p className="cursor-pointer transition duration-300 ease-in-out ">
               Remove all
-            </a>
+            </p>
           </button>
         ) : null}
         <section className="max-h-[400px] space-y-4 overflow-y-scroll border-b border-white/20 bg-bkg-2 p-5  px-7  ">
