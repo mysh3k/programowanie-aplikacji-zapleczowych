@@ -39,8 +39,8 @@ urlpatterns = [
 
     path('api/register/', RegisterUser.as_view(), name='register'),
     path('api/login/', views.obtain_auth_token),
-    path('api/category/<str:category>/', ProductList.as_view()),
-    path('api/product/<int:product_id>', ProductView.as_view()),
+    path('api/category/<str:category>/', ProductList.as_view(), name='product-list-by-category'),
+    path('api/product/<int:product_id>', ProductView.as_view(), name='product-details'),
 
     path('add-to-cart/<int:product_id>/', AddProduct.as_view()),
     path('shopping-cart/', ShoppingCartAPI.as_view()),
