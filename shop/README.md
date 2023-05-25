@@ -34,6 +34,12 @@ pip install django-cors-headers
 ```python
 pip install requests
 ```
+## Install psycopg2-binary:
+This library allows django to connect with PostgreSQL
+```python
+pip install psycopg2-binary
+```
+
 ## Set up the PostgreSQL database: 
 Install PostgreSQL on the computer and create a new PostgreSQL database for your project. Note down the database name, username, password, and host details for the next step.
 
