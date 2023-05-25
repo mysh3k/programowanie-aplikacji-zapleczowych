@@ -53,7 +53,7 @@ python manage.py loaddata sample
 Start the development server using the following command:
 
 ```python
-python manage.py runserver 127.0.0.1:8888
+python manage.py runserver 127.0.0.1:7777
 ```
 The server will start running on http://localhost:7777.
 
