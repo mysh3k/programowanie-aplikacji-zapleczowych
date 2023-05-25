@@ -49,7 +49,8 @@ Provide the PostgreSQL database name, username, password, and host information.
 python manage.py migrate
 python manage.py loaddata sample
 ```
-Launch the development server: Start the development server using the following command:
+## Launch the development server: 
+Start the development server using the following command:
 
 ```python
 python manage.py runserver 127.0.0.1:8888
