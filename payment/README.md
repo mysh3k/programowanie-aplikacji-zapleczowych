@@ -1,6 +1,8 @@
-# Install Python 3.11: Ensure that Python 3.11 is installed on the computer. You can download and install Python 3.11 from the official Python website (https://www.python.org).
+# Install Python 3.11: 
+Ensure that Python 3.11 is installed on the computer. You can download and install Python 3.11 from the official Python website (https://www.python.org).
 
-## Set up a virtual environment: Create a virtual environment for your project to isolate its dependencies. Open the terminal or command prompt and navigate to your project directory. Then, run the following command to create a virtual environment:
+## Set up a virtual environment: 
+Create a virtual environment for your project to isolate its dependencies. Open the terminal or command prompt and navigate to your project directory. Then, run the following command to create a virtual environment:
 
 ```
 python3.11 -m venv myenv
