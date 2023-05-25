@@ -34,6 +34,8 @@ pip install django-cors-headers
 ```python
 pip install requests
 ```
+##Set up the PostgreSQL database: 
+Install PostgreSQL on the computer and create a new PostgreSQL database for your project. Note down the database name, username, password, and host details for the next step.
 
 # Configure the project settings: 
 In your Django project, open the settings.py file and make the following changes:
