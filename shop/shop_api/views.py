@@ -134,7 +134,7 @@ class MakeOrder(View):
         token = token.split(' ')
         user = Token.objects.get(key=token[1]).user
         shopping_cart = ShoppingCart.objects.get(user=user)
-        order = Order(user=user, done=False, token=token[1], items=shopping_cart.items, total_price=shopping_cart.get_total_price())
+        order = Order(user=user, done=False, items=shopping_cart.items, total_price=shopping_cart.get_total_price())
         order.save()
         shopping_cart.clear_cart()
         shopping_cart.save()
@@ -149,10 +149,10 @@ class PayOrder(View):
         user = Token.objects.get(key=token[1]).user
         order = Order.objects.get(user=user, id=order_id)
         serializer = OrderSerializer(order)
-        headers = {'authorization': 'token'}
-        print(headers, serializer.data)
-        # payment_api_response = requests.post('http://192.168.15.115:8888/create-order/', headers=headers, data=serializer.data)
-        return JsonResponse({}, safe=False)
+        headers = {'authorization': 't0k3n12345'}
+        print(serializer.data, headers)
+        payment_api_response = requests.post('http://192.168.15.115:8888/create-order/', headers=headers, data=json.dumps(serializer.data))
+        return JsonResponse(payment_api_response.json(), safe=False)
 
 
 class OverviewOrders(View):
@@ -173,3 +173,14 @@ class OverviewOrder(View):
         order = Order.objects.get(user=user, id=order_id)
         serializer = OrderSerializer(order)
         return JsonResponse([serializer.data], safe=False)
+
+
+class OrderStatus(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        order = Order.objects.get(token=data['token'])
+        order.done = data['done']
+        order.save()
+        serializer = OrderSerializer(order)
+        return JsonResponse([serializer.data], safe=False)
+    

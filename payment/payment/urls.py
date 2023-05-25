@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from payment_api.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('create-order/', CreateOrder.as_view()),
+    path('pay-order/<str:order_token>/', PayOrder.as_view()),
 ]

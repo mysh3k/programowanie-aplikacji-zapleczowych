@@ -11,6 +11,7 @@ from rest_framework.authtoken.models import Token
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+        ShoppingCart.objects.create(user=instance)
 
 
 # Create your models here.
@@ -73,7 +74,7 @@ class ShoppingCart(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     done = models.BooleanField(default=False)
-    token = models.CharField(max_length=128)
+    token = models.CharField(max_length=128, null=True)
     items = JSONField(default=list)
     payment_url = models.CharField(max_length=128, null=True, default=None)
     total_price = models.FloatField()

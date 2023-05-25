@@ -12,13 +12,28 @@ import requests
 class CreateOrder(View):
     def post(self, request):
         data = json.loads(request.body)
-        order = Order(price=data['price'], token=hex(data['id'] * 12345))
-        order.save()
+        print(data)
+        headers = request.headers['authorization']
+        client = Client.objects.get(access_token=headers)
+        s_order = Order.objects.filter(token=hex(data['id'] * 12345))
+        if s_order.count() > 0:
+            order = s_order.first()
+        else:
+            order = Order(client_id=client, price=data['total_price'], token=hex(data['id'] * 12345))
+            order.save()
         serializer = OrderSerializer(order)
-        return JsonResponse([serializer], safe=False)
+        return JsonResponse([serializer.data], safe=False)
 
 
 class PayOrder(View):
-    def get(self, request):
-
-        return JsonResponse([], safe=False)
+    def get(self, request, order_token):
+        order = Order.objects.get(token=order_token)
+        serializer = OrderSerializer(order)
+        return JsonResponse([serializer.data], safe=False)
+    def post(self, request, order_token):
+        order = Order.objects.get(token=order_token)
+        order.done = True
+        order.save()
+        serializer = OrderSerializer(order)
+        requests.post(f'http://192.168.15.115:7777/update-status/', data=json.dumps(serializer.data))
+        return JsonResponse([serializer.data], safe=False)
