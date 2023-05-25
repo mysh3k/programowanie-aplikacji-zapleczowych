@@ -34,6 +34,6 @@ class PayOrder(View):
         order.done = True
         order.save()
         serializer = OrderSerializer(order)
-        response = requests.post(f'http://192.168.15.115:7777/update-status/', data=json.dumps(serializer.data))
+        response = requests.post(f'http://127.0.0.1:7777/update-status/', data=json.dumps(serializer.data))
         data = response.json()
         return JsonResponse([data], safe=False)

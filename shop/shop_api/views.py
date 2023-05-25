@@ -160,7 +160,7 @@ class PayOrder(View):
         serializer = OrderSerializer(order)
         headers = {'authorization': 't0k3n12345'}
         print(serializer.data, headers)
-        payment_api_response = requests.post('http://192.168.15.115:8888/create-order/', headers=headers, data=json.dumps(serializer.data))
+        payment_api_response = requests.post('http://127.0.0.1:8888/create-order/', headers=headers, data=json.dumps(serializer.data))
         return JsonResponse(payment_api_response.json(), safe=False)
 
 
