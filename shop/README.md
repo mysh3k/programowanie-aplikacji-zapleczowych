@@ -55,10 +55,10 @@ Start the development server using the following command:
 ```python
 python manage.py runserver 127.0.0.1:8888
 ```
-The server will start running on http://localhost:8888.
+The server will start running on http://localhost:7777.
 
 ## Initialize passwords for test users
-Go to http://localhost:8888/passwords/
+Go to http://localhost:7777/passwords/
 Then comment out line in urls.py
 ```python
 path('passwords/', SetupPasswords.as_view())
