@@ -19,12 +19,14 @@ myenv\Scripts\activate
 ```
 source myenv/bin/activate
 ```
-## Install Django and Django Rest Framework: With the virtual environment activated, install Django and Django Rest Framework using the following command:
+## Install Django and Django Rest Framework: 
+With the virtual environment activated, install Django and Django Rest Framework using the following command:
 
 ```python
 pip install django djangorestframework
 ```
-## Install django-cors-headers: Install the django-cors-headers package, which allows Cross-Origin Resource Sharing (CORS) in your Django project:
+## Install django-cors-headers: 
+Install the django-cors-headers package, which allows Cross-Origin Resource Sharing (CORS) in your Django project:
 ```python
 pip install django-cors-headers
 ```
@@ -33,7 +35,8 @@ pip install django-cors-headers
 pip install requests
 ```
 
-# Configure the project settings: In your Django project, open the settings.py file and make the following changes:
+# Configure the project settings: 
+In your Django project, open the settings.py file and make the following changes:
 
 ## Set up the database connection details by updating the DATABASES configuration. 
 Provide the PostgreSQL database name, username, password, and host information.
