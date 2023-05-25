@@ -64,7 +64,7 @@
     "fields": {
       "username": "admin",
       "password": "admin123",
-      "superuser": true
+      "is_superuser": true
     }
   },
   {
