@@ -37,7 +37,7 @@
   },
   {
     "model": "shop_api.product",
-    "pk": 2,
+    "pk": 3,
     "fields": {
       "product_name": "Product 3",
       "product_img_url": "https://static1.redcart.pl/templates/images/thumb/6979/1024/1024/pl/0/templates/images/products/6979/72cc408dab0f974fecfa6fc2b03c4d49.png",
@@ -48,7 +48,7 @@
   },
   {
     "model": "shop_api.product",
-    "pk": 2,
+    "pk": 4,
     "fields": {
       "product_name": "Product 4",
       "product_img_url": "https://muggasklep.pl/images/cleanhands/zel-antybakteryjny-do-rak-300ml-cleanhands-aloe.jpg",
@@ -57,7 +57,17 @@
       "category_fk": 2
     }
   },
-
+  {
+    "model": "shop_api.product",
+    "pk": 5,
+    "fields": {
+      "product_name": "Pomidur",
+      "product_img_url": "https://polki.pl/foto/4_3_LARGE/potas-w-pomidorach-ogromna-zaleta-ale-dla-niektorych-tez-wada-pomidorow-2487541.webp",
+      "price": 1.6,
+      "description": "Fajny, uśmiechnięty :)",
+      "category_fk": 1
+    }
+  },
   {
     "model": "auth.user",
     "pk": 1,
@@ -78,3 +88,4 @@
 
 
 ]
+
