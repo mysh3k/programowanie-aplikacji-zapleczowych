@@ -169,7 +169,7 @@ class OverviewOrders(View):
         token = request.headers['Authorization']
         token = token.split(' ')
         user = Token.objects.get(key=token[1]).user
-        order = Order.objects.filter(user=user)
+        order = Order.objects.filter(user=user).order_by('-id')
         serializer = OrderSerializer(order, many=True)
         return JsonResponse(serializer.data, safe=False)
 
