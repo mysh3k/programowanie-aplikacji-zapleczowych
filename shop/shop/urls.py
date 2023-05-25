@@ -52,5 +52,5 @@ urlpatterns = [
     path('show-orders/', OverviewOrders.as_view()),
     path('show-order/<int:order_id>', OverviewOrder.as_view()),
     path('pay-order/<int:order_id>/', PayOrder.as_view()),
-
+    path('update-status/', OrderStatus.as_view()),
 ]

@@ -12,7 +12,6 @@ import requests
 class CreateOrder(View):
     def post(self, request):
         data = json.loads(request.body)
-        print(data)
         headers = request.headers['authorization']
         client = Client.objects.get(access_token=headers)
         s_order = Order.objects.filter(token=hex(data['id'] * 12345))
@@ -35,5 +34,6 @@ class PayOrder(View):
         order.done = True
         order.save()
         serializer = OrderSerializer(order)
-        requests.post(f'http://192.168.15.115:7777/update-status/', data=json.dumps(serializer.data))
-        return JsonResponse([serializer.data], safe=False)
+        response = requests.post(f'http://192.168.15.115:7777/update-status/', data=json.dumps(serializer.data))
+        data = response.json()
+        return JsonResponse([data], safe=False)

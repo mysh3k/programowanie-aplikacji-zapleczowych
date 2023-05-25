@@ -178,8 +178,9 @@ class OverviewOrder(View):
 class OrderStatus(View):
     def post(self, request):
         data = json.loads(request.body)
-        order = Order.objects.get(token=data['token'])
+        print(data)
+        order = Order.objects.get(id=int(data['token'], 0) / 12345)
         order.done = data['done']
         order.save()
         serializer = OrderSerializer(order)
-        return JsonResponse([serializer.data], safe=False)
+        return JsonResponse(serializer.data, safe=False)
