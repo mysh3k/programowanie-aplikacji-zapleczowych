@@ -183,4 +183,3 @@ class OrderStatus(View):
         order.save()
         serializer = OrderSerializer(order)
         return JsonResponse([serializer.data], safe=False)
-    
