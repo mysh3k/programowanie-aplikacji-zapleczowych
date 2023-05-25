@@ -35,6 +35,15 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
 
+class SetupPasswords(View):
+    def get(self, request):
+        users = User.objects.all()
+        for user in users:
+            user.set_password(user.password)
+            user.save()
+        return JsonResponse({'job': 'done'}, safe=False)
+
+
 class CategoriesList(View):
     def get(self, request):
         categories = Category.objects.all()

@@ -1,0 +1,16 @@
+[
+  {
+    "model": "payment_api.client",
+    "pk": 1,
+    "fields": {
+      "access_token": "t0k3n123456789"
+    }
+  },
+    {
+    "model": "payment_api.client",
+    "pk": 2,
+    "fields": {
+      "access_token": "t0k3n12345"
+    }
+  }
+]

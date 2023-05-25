@@ -1,0 +1,80 @@
+[
+  {
+    "model": "shop_api.category",
+    "pk": 1,
+    "fields": {
+      "category_name": "Kategoria 1"
+    }
+  },
+  {
+    "model": "shop_api.category",
+    "pk": 2,
+    "fields": {
+      "category_name": "Kategoria 2"
+    }
+  },
+  {
+    "model": "shop_api.product",
+    "pk": 1,
+    "fields": {
+      "product_name": "Product 1",
+      "product_img_url": "https://warzywko.sklep.pl/446-large_default/orzech-wloski-luz.jpg",
+      "price": 4.5,
+      "description": "Orzech",
+      "category_fk": 1
+    }
+  },
+    {
+    "model": "shop_api.product",
+    "pk": 2,
+    "fields": {
+      "product_name": "Product 2",
+      "product_img_url": "https://cdn.shopify.com/s/files/1/0395/4113/products/banan_8f43351d-4cd9-4c4d-9daf-e20749276749_1024x1024.jpg?v=1417774878",
+      "price": 3.2,
+      "description": "Banan",
+      "category_fk": 1
+    }
+  },
+  {
+    "model": "shop_api.product",
+    "pk": 2,
+    "fields": {
+      "product_name": "Product 3",
+      "product_img_url": "https://static1.redcart.pl/templates/images/thumb/6979/1024/1024/pl/0/templates/images/products/6979/72cc408dab0f974fecfa6fc2b03c4d49.png",
+      "price": 20.5,
+      "description": "Nie wiem!",
+      "category_fk": 2
+    }
+  },
+  {
+    "model": "shop_api.product",
+    "pk": 2,
+    "fields": {
+      "product_name": "Product 4",
+      "product_img_url": "https://muggasklep.pl/images/cleanhands/zel-antybakteryjny-do-rak-300ml-cleanhands-aloe.jpg",
+      "price": 30.5,
+      "description": "Nie wiem!",
+      "category_fk": 2
+    }
+  },
+
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "password": "admin123",
+      "superuser": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "test",
+      "password": "test123"
+    }
+  }
+
+
+]
