@@ -78,6 +78,7 @@ export default function LoginForm({ endpoint }) {
               setName(e.target.value);
             }}
             required
+            autoFocus
           />
           <label for="login__password">Password</label>
           <input

@@ -42,36 +42,29 @@ const Orders = () => {
                   className="mt-2 flex flex-col rounded-2xl border   border-slate-200/20 bg-bkg-2 p-5"
                 >
                   <div className="flex items-center gap-2">
-                    <a
-                      className="cursor-pointer text-accent-1"
-                      href={`/order/${id}`}
-                    >
-                      <span className="font-bold"> Order ID </span>
-
-                      {id}
-                    </a>
-
                     {!done ? (
-                      <>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="10"
-                          height="10"
-                          fill="currentColor"
-                          viewBox="0 0 256 256"
-                        >
-                          <path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path>
-                        </svg>
-
-                        <span className="mr-auto text-xs">Click here pay</span>
-                      </>
+                      <a
+                        className="cursor-pointer font-bold text-accent-1"
+                        href={`/order/${id}`}
+                      >
+                        Order {id}{" "}
+                        <span className="text-xs">(Click to pay)</span>
+                      </a>
                     ) : (
-                      <div className="flex-1"></div>
+                      <a
+                        className="cursor-pointer font-bold text-accent-1"
+                        href={`/order/${id}`}
+                      >
+                        Order {id}
+                      </a>
                     )}
+
+                    <div className="flex-1"></div>
+
                     <div>
                       <span
-                        className={`font-bold ${
-                          done ? "text-accent-1" : "text-red-500"
+                        className={`font-semibold ${
+                          done ? "text-accent-1/80" : "text-red-500"
                         } `}
                       >
                         {done ? "Paid" : "Not Paid"}
