@@ -159,8 +159,7 @@ class PayOrder(View):
         order = Order.objects.get(user=user, id=order_id)
         serializer = OrderSerializer(order)
         headers = {'authorization': 't0k3n12345'}
-        print(serializer.data, headers)
-        payment_api_response = requests.post('http://127.0.0.1:8888/create-order/', headers=headers, data=json.dumps(serializer.data))
+        payment_api_response = requests.post('http://192.168.15.115:8888/create-order/', headers=headers, data=json.dumps(serializer.data))
         return JsonResponse(payment_api_response.json(), safe=False)
 
 
@@ -187,7 +186,6 @@ class OverviewOrder(View):
 class OrderStatus(View):
     def post(self, request):
         data = json.loads(request.body)
-        print(data)
         order = Order.objects.get(id=int(data['token'], 0) / 12345)
         order.done = data['done']
         order.save()

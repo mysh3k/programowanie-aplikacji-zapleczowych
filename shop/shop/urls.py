@@ -19,7 +19,10 @@ from django.urls import include, path
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.views.generic import TemplateView
 from rest_framework import routers, serializers, viewsets
+from rest_framework.schemas import get_schema_view
+
 from shop_api.views import *
 from rest_framework.authtoken import views
 
@@ -31,6 +34,9 @@ router.register(r'categories', CategoryViewSet)
 router.register(r'products', ProductViewSet)
 
 urlpatterns = [
+    path('swagger-ui/', TemplateView.as_view(template_name='swagger-ui.html', extra_context={'schema_url': 'openapi-schema'}), name='swagger-ui'),
+    path('openapi', get_schema_view(title="Shop", description="API for all things …", version="1.0.1"), name='openapi-schema'),
+
     path('api-auth/', include('rest_framework.urls')),
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
@@ -56,3 +62,13 @@ urlpatterns = [
 
     path('passwords/', SetupPasswords.as_view())
 ]
+
+schema_url_patterns = [
+    path('api/', include('shop.urls')),
+]
+
+schema_view = get_schema_view(
+    title='Server Monitoring API',
+    url='https://www.example.org/api/',
+    patterns=schema_url_patterns,
+)
