@@ -1,5 +1,5 @@
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.views import View
 from rest_framework import routers, serializers, viewsets, permissions
@@ -61,9 +61,12 @@ class ProductList(View):
 
 class ProductView(View):
     def get(self, request, product_id):
-        product = Product.objects.get(id=product_id)
-        serializer = ProductSerializer(product)
-        return JsonResponse([serializer.data], safe=False)
+        try:
+            product = Product.objects.get(id=product_id)
+            serializer = ProductSerializer(product)
+            return JsonResponse([serializer.data], safe=False)
+        except:
+            return HttpResponseNotFound('404')
 
 
 class RegisterUser(CreateAPIView):
