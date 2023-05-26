@@ -9,7 +9,7 @@
 
 ## Usage
 
-1. Start the development server: `npm start`.
+1. Start the development server: `npm run dev`.
 2. Open your web browser and visit [http://localhost:5173](http://localhost:5173).
 3. You should see the project running in your browser.
 
