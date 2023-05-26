@@ -63,7 +63,7 @@
     "fields": {
       "product_name": "Pomidur",
       "product_img_url": "https://polki.pl/foto/4_3_LARGE/potas-w-pomidorach-ogromna-zaleta-ale-dla-niektorych-tez-wada-pomidorow-2487541.webp",
-      "price": 1.6,
+      "price": 1.8,
       "description": "Fajny, uśmiechnięty :)",
       "category_fk": 1
     }
@@ -74,7 +74,8 @@
     "fields": {
       "username": "admin",
       "password": "admin123",
-      "is_superuser": true
+      "is_superuser": true,
+      "is_staff": true
     }
   },
   {
